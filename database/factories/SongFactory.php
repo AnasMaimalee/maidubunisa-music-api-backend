@@ -14,17 +14,16 @@ class SongFactory extends Factory
     public function definition(): array
     {
         return [
-            'id'         => (string) Str::uuid(),
-            'album_id'   => Album::factory(),
-            'title'      => $this->faker->sentence(2),
-            'duration'   => rand(120, 400),
-            'file_path'  => 'songs/audio/sample.mp3',
-            'file_size'  => rand(1_000_000, 5_000_000),
-            'checksum'   => hash('sha256', Str::random(40)),
-            'is_active'  => true,
+            'id'        => (string) Str::uuid(),
+            'album_id'  => Album::factory(),
+            'title'     => $this->faker->sentence(2),
+            'duration'  => rand(120, 400),
+            'file_path' => 'songs/audio/sample.mp3',
+            'file_size' => rand(1_000_000, 5_000_000),
+            'checksum'  => hash('sha256', Str::random(40)),
+            'is_active' => true,
         ];
-            }
+    }
 }
-
 
 
