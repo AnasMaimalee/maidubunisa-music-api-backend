@@ -88,3 +88,36 @@ Route::prefix('v1')->group(function () {
     Route::get('/songs', [SongController::class, 'index']);
     Route::get('/songs/{song}', [SongController::class, 'show']);
 });
+
+
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+
+// Override /storage/{path} to add CORS for dev (place this LAST in web.php)
+Route::get('/storage/{path}', function ($path) {
+    // Basic security: prevent ../ traversal
+    $path = ltrim(str_replace(['../', '..\\'], '', $path), '/');
+
+    $disk = Storage::disk('public');
+
+    if (!$disk->exists($path)) {
+        abort(404, 'File not found');
+    }
+
+    $mime = $disk->mimeType($path) ?: 'application/octet-stream';
+
+    // Force correct type for MP3 (fixes "no supported source" after CORS)
+    if (str_ends_with(strtolower($path), '.mp3')) {
+        $mime = 'audio/mpeg';
+    }
+
+    return Response::file($disk->path($path), [
+        'Content-Type'              => $mime,
+        'Content-Length'            => $disk->size($path),
+        'Accept-Ranges'             => 'bytes',  // Enables seeking in player
+        'Access-Control-Allow-Origin' => '*',    // Use '*' for dev; tighten later
+        'Access-Control-Allow-Methods' => 'GET, OPTIONS',
+        'Access-Control-Allow-Headers' => 'Content-Type, Authorization, Range',
+        'Access-Control-Expose-Headers' => 'Content-Length, Content-Range',
+    ]);
+})->where('path', '.*');

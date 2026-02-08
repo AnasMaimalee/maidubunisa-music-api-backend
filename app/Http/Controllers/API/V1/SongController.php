@@ -34,4 +34,24 @@ class SongController extends Controller
 
         return $this->response->success($song);
     }
+
+    public function stream($path)
+    {
+        $fullPath = storage_path('app/public/' . $path); // adjust if needed
+
+        if (!file_exists($fullPath)) {
+            abort(404);
+        }
+
+        $mime = 'audio/mpeg'; // force for .mp3
+
+        // Or detect properly:
+        // $mime = mime_content_type($fullPath) ?: 'audio/mpeg';
+
+        return response()->file($fullPath, [
+            'Content-Type' => $mime,
+            'Content-Length' => filesize($fullPath),
+            'Accept-Ranges' => 'bytes', // helps seeking
+        ]);
+    }
 }
