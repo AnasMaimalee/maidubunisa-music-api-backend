@@ -12,12 +12,13 @@ return [
     'allowed_origins' => [
         'http://localhost:8081',
         'http://localhost:*',     // wildcard for dev ports
-        'https://born-quarters-flour-aspects.trycloudflare.com',
-        'https://fatidic-elin-unelective.ngrok-free.dev'
+        'https://fatidic-elin-unelective.ngrok-free.dev '
     ],
 
     'allowed_origins_patterns' => [
-        '/^https:\/\/.*\.trycloudflare\.com$/',
+        '/^https?:\/\/.*\.trycloudflare\.com$/',  // ← allow http & https, any subdomain
+        '/^https?:\/\/.*\.ngrok-free.dev',        // allow from ngrok
+        '/^https?:\/\/localhost(:[0-9]+)?$/',     // extra safety for local,
     ],
 
     'allowed_headers' => ['*'],
@@ -26,5 +27,5 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,  // Change to false unless you really need cookies/auth
+    'supports_credentials' => true,  // Change to false unless you really need cookies/auth
 ];

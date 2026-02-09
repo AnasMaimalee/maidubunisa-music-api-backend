@@ -8,14 +8,21 @@ use Illuminate\Support\Str;
 class SongRepository
 {
     protected function formatSong(Song $song): array
+    
     {
+        $filePath = $song->file_path;
+
+        // Force HTTPS - 3 reliable ways (pick one or combine)
+        $url = asset('storage/' . $filePath);                      // base
+        $url = str_replace('http://', 'https://', $url);
+
         return [
             'id'         => $song->id,
             'title'      => $song->title,
             'duration'   => $song->duration,
             'file_size'  => $song->file_size,
             'file_path'  => $song->file_path,
-            'url'        => asset('storage/' . $song->file_path), // 🔥 FIX
+            'url'        => $url, // 🔥 FIX
             'is_active'  => $song->is_active,
             'created_at'=> $song->created_at,
         ];

@@ -10,8 +10,8 @@ class MusicSeeder extends Seeder
     public function run(): void
     {
         Album::factory()
-            ->count(5)
-            ->hasSongs(10)
+            ->count(7)
+            ->hasSongs(12)
             ->create();
     }
 }

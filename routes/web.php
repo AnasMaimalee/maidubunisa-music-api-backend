@@ -13,9 +13,13 @@ Route::get('/songs/{path}', function ($path) {
         abort(404);
     }
     
-    return response()->file($filePath, [
-        'Content-Type' => 'audio/mpeg',
-        'Content-Disposition' => 'inline',
-        'Cache-Control' => 'public, max-age=3600'
+    return Response::file($disk->path($path), [
+        'Content-Type'              => $mime,
+        'Content-Length'            => $disk->size($path),
+        'Accept-Ranges'             => 'bytes',
+        'Access-Control-Allow-Origin' => '*',
+        'Access-Control-Allow-Methods' => 'GET, HEAD, OPTIONS',
+        'Access-Control-Expose-Headers' => 'Content-Length, Content-Range, Accept-Ranges',
+        'Cache-Control'             => 'public, max-age=86400', // cache audio for 1 day
     ]);
 })->where('path', '.*');
