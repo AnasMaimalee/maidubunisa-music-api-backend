@@ -3,8 +3,8 @@ return [
     'paths' => [
         'api/*',
         'broadcasting/auth',
-        'storage/*',          // ← Add this
-        'songs/*',            // ← If needed
+        'storage/*',
+        'songs/*',
     ],
 
     'allowed_methods' => ['*'],
@@ -12,7 +12,8 @@ return [
     'allowed_origins' => [
         'http://localhost:8081',
         'http://localhost:*',     // wildcard for dev ports
-        'https://fatidic-elin-unelective.ngrok-free.dev '
+        'https://trunk-universe-lafayette-repeat.trycloudflare.com',
+        'https://fatidic-elin-unelective.ngrok-free.dev'
     ],
 
     'allowed_origins_patterns' => [
