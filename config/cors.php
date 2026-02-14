@@ -13,6 +13,7 @@ return [
         'http://localhost:8081',
         'http://localhost:*',     // wildcard for dev ports
         'https://trunk-universe-lafayette-repeat.trycloudflare.com',
+        'https://fatidic-elin-unelective.ngrok-free.dev',
         'https://fatidic-elin-unelective.ngrok-free.dev'
     ],
 
